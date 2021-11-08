@@ -1,8 +1,12 @@
 package com.example.towersadmin.ui
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +23,10 @@ class DashBoardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     lateinit var drawerLayout: DrawerLayout
     lateinit var navView : NavigationView
 
+    lateinit var header_image : ImageView
+    lateinit var header_nome : TextView
+    lateinit var header_email : TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
@@ -28,6 +36,10 @@ class DashBoardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         drawerLayout = findViewById(R.id.drawer_layout)
         navView = findViewById(R.id.nav_view)
+
+        header_image = findViewById(R.id.header_image)
+        header_nome = findViewById(R.id.header_nome)
+        header_email = findViewById(R.id.header_email)
 
 
         fun abrirCadastroVisitantes() {
@@ -46,6 +58,12 @@ class DashBoardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         )
     }
 
+    private fun preencherMenuDashBoard(){
+        val dados = getSharedPreferences("TowersAdmin", Context.MODE_PRIVATE)
+
+        header_email.text = dados.getString("email", "")
+        header_nome.text = dados.getString("name", "")
+    }
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_home -> {
@@ -68,7 +86,7 @@ class DashBoardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 startActivity(intent)
             }
             R.id.nav_aviso -> {
-                val intent = Intent(this, activity_aviso::class.java)
+                val intent = Intent(this, activity_reclamacoes::class.java)
                 startActivity(intent)
             }
             R.id.nav_mural_de_avisos -> {
