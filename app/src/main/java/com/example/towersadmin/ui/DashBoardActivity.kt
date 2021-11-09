@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -23,9 +24,6 @@ class DashBoardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     lateinit var drawerLayout: DrawerLayout
     lateinit var navView : NavigationView
 
-    lateinit var header_image : ImageView
-    lateinit var header_nome : TextView
-    lateinit var header_email : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,15 +35,14 @@ class DashBoardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         drawerLayout = findViewById(R.id.drawer_layout)
         navView = findViewById(R.id.nav_view)
 
-        header_image = findViewById(R.id.header_image)
-        header_nome = findViewById(R.id.header_nome)
-        header_email = findViewById(R.id.header_email)
 
 
-        fun abrirCadastroVisitantes() {
-            val intent = Intent(this, CadastroVisitanteActivity::class.java)
-            startActivity(intent)
-        }
+        val header: View = navView.getHeaderView(0)
+        val header_nome:TextView = header.findViewById(R.id.header_nome)
+        val header_email:TextView = header.findViewById(R.id.header_email)
+
+        header_nome.text = dados.getString("user_name", "")
+        header_email.text = dados.getString("user_email", "")
 
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, toolbar, 0, 0
@@ -58,12 +55,8 @@ class DashBoardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         )
     }
 
-    private fun preencherMenuDashBoard(){
-        val dados = getSharedPreferences("TowersAdmin", Context.MODE_PRIVATE)
+    val dados = getSharedPreferences("TowersAdmin", Context.MODE_PRIVATE)
 
-        header_email.text = dados.getString("email", "")
-        header_nome.text = dados.getString("name", "")
-    }
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_home -> {

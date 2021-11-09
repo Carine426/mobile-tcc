@@ -3,6 +3,7 @@ package com.example.towersadmin.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -15,6 +16,7 @@ import com.example.towersadmin.utils.SessionManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.math.log
 
 
 class LoginActivity : AppCompatActivity() {
@@ -44,27 +46,32 @@ class LoginActivity : AppCompatActivity() {
         btn_continuar.setOnClickListener {
 
             apiClient.getApiService()
-                .login(LoginRequest(et_email.text.toString(), et_senha.text.toString()))
-                .enqueue(object : Callback<LoginResponse> {
+                    .login(LoginRequest(et_email.text.toString(), et_senha.text.toString()))
+                    .enqueue(object : Callback<LoginResponse> {
 
-                    override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>){
-                        val loginResponse = response.body()
+                        override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                            val loginResponse = response.body()
 
-                        if (loginResponse?.Id != null) {
-                            sessionManager.saveAuthToken(loginResponse.Id, loginResponse.token)
+                            if (loginResponse?.Id != null) {
+                                sessionManager.saveAuthToken(
+                                        loginResponse.Id, loginResponse.name,
+                                        loginResponse.surname, loginResponse.cpf,
+                                        loginResponse.birth, loginResponse.email,
+                                        loginResponse.token
+                                )
+                                Log.i("response", loginResponse.toString())
+                                abrirDashBoard()
 
-                            abrirDashBoard()
+                            } else {
+                                tv_erro.setText("Email ou senha incorretos!")
 
-                        } else {
-                            tv_erro.setText("Email ou senha incorretos!")
-
+                            }
                         }
-                    }
 
-                    override fun onFailure(call: Call<LoginResponse>, t: Throwable){
-                        tv_erro.setText("Algo deu errado!")
-                    }
-                })
+                        override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                            tv_erro.setText("Algo deu errado!")
+                        }
+                    })
 
         }
 
