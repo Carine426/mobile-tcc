@@ -38,4 +38,13 @@
         <item>Apartamento 3</item>
     </string-array>
 
+    <string-array name="Espaços">
+        <item>SELECIONE O ESPAÇO</item>
+        <item>Salão de Festas(lobby)</item>
+        <item>Salão de Festas(TORRE B)</item>
+        <item>Sala Cinema</item>
+        <item>Sala Jogos</item>
+        <item>Sala Jogos(Crianças)</item>
+    </string-array>
+
 </resources>
