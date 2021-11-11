@@ -4,8 +4,8 @@ import com.google.gson.annotations.SerializedName
 
 data class LoginResponse(
 
-    @SerializedName("Id")
-    var Id: Int,
+    @SerializedName("moradorId")
+    var moradorId: Int,
 
     @SerializedName("name")
     var name: String,

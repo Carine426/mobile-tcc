@@ -52,9 +52,9 @@ class LoginActivity : AppCompatActivity() {
                         override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                             val loginResponse = response.body()
 
-                            if (loginResponse?.Id != null) {
+                            if (loginResponse?.moradorId != null) {
                                 sessionManager.saveAuthToken(
-                                        loginResponse.Id, loginResponse.name,
+                                        loginResponse.moradorId, loginResponse.name,
                                         loginResponse.surname, loginResponse.cpf,
                                         loginResponse.birth, loginResponse.email,
                                         loginResponse.token

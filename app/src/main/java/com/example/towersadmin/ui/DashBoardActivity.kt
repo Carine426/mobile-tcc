@@ -3,6 +3,7 @@ package com.example.towersadmin.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle;
+import android.preference.PreferenceManager
 import android.view.MenuItem;
 import android.view.View
 import android.widget.EditText
@@ -35,18 +36,24 @@ class DashBoardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         drawerLayout = findViewById(R.id.drawer_layout)
         navView = findViewById(R.id.nav_view)
 
-
-
         val header: View = navView.getHeaderView(0)
         val header_nome:TextView = header.findViewById(R.id.header_nome)
         val header_email:TextView = header.findViewById(R.id.header_email)
 
-        header_nome.text = dados.getString("user_name", "")
-        header_email.text = dados.getString("user_email", "")
+
+        val dados = getSharedPreferences("TowersAdmin", MODE_PRIVATE)
+
+        val nome_header = dados.getString("user_name", "")
+        val email_header = dados.getString("user_email", "")
+
+        header_nome.text = nome_header
+        header_email.text = email_header
 
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, toolbar, 0, 0
         )
+
+
 
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
@@ -55,7 +62,6 @@ class DashBoardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         )
     }
 
-    val dados = getSharedPreferences("TowersAdmin", Context.MODE_PRIVATE)
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

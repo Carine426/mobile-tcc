@@ -12,6 +12,7 @@ import com.example.towersadmin.R
 import com.example.towersadmin.api.ApiClient
 import com.example.towersadmin.data.LoginRequest
 import com.example.towersadmin.data.LoginResponse
+import com.example.towersadmin.data.LoginSindicoResponse
 import com.example.towersadmin.utils.SessionManager
 import retrofit2.Call
 import retrofit2.Callback
@@ -44,15 +45,15 @@ class LoginSindicoActivity : AppCompatActivity() {
         btn_continuar.setOnClickListener {
             apiClient.getApiService()
                     .loginSindico(LoginRequest(et_email.text.toString(), et_senha.text.toString()))
-                    .enqueue(object : Callback<LoginResponse> {
+                    .enqueue(object : Callback<LoginSindicoResponse> {
 
                         override fun onResponse(
-                                call: Call<LoginResponse>, response: Response<LoginResponse>
+                                call: Call<LoginSindicoResponse>, response: Response<LoginSindicoResponse>
                         ) {
                             val loginResponse = response.body()
 
-                            if (loginResponse?.Id != null) {
-                                sessionManager.saveAuthToken(loginResponse.Id, loginResponse.name,
+                            if (loginResponse?.sindicoId != null) {
+                                sessionManager.saveAuthToken(loginResponse.sindicoId, loginResponse.name,
                                         loginResponse.surname, loginResponse.cpf,
                                         loginResponse.birth, loginResponse.email,
                                         loginResponse.token)
@@ -67,7 +68,7 @@ class LoginSindicoActivity : AppCompatActivity() {
                             }
                         }
 
-                        override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                        override fun onFailure(call: Call<LoginSindicoResponse>, t: Throwable) {
                             tv_erro.setText("Algo deu errado!")
                         }
                     })

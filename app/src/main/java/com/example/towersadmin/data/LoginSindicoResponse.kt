@@ -3,8 +3,9 @@ package com.example.towersadmin.data
 import com.google.gson.annotations.SerializedName
 
 data class LoginSindicoResponse(
-    @SerializedName("Id")
-    var Id: Int,
+
+    @SerializedName("sindicoId")
+    var sindicoId: Int,
 
     @SerializedName("name")
     var name: String,
