@@ -12,22 +12,14 @@
     android:paddingBottom="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
-        android:id="@+id/header_image"
-        android:layout_width="73dp"
-        android:layout_height="70dp"
-        android:contentDescription="Navegation Header"
-        android:paddingTop="16dp"
-        app:srcCompat="@drawable/ic_baseline_person_24"
-        app:tint="@color/white" />
-
     <TextView
         android:id="@+id/header_nome"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
+        android:gravity="bottom"
         android:paddingTop="8dp"
         android:text="Fulano de Tal"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/white" />
 
     <TextView

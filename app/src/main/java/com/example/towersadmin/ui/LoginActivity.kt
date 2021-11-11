@@ -4,10 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.example.towersadmin.R
 import com.example.towersadmin.api.ApiClient
 import com.example.towersadmin.data.LoginRequest
@@ -36,6 +33,7 @@ class LoginActivity : AppCompatActivity() {
         val btn_continuar: Button = findViewById(R.id.btn_continuar)
         val tv_erro: TextView = findViewById(R.id.tv_mensagem_de_erro)
         val tv_esqueceu_senha: TextView = findViewById(R.id.esqueceu_senha)
+        val check_lembrar : CheckBox = findViewById(R.id.check_lembrar)
 
         fun abrirDashBoard() {
             val intent = Intent(this, DashBoardActivity::class.java)
@@ -52,19 +50,30 @@ class LoginActivity : AppCompatActivity() {
                         override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                             val loginResponse = response.body()
 
-                            if (loginResponse?.moradorId != null) {
+                            if (loginResponse?.moradorId != null && check_lembrar.isChecked) {
                                 sessionManager.saveAuthToken(
                                         loginResponse.moradorId, loginResponse.name,
                                         loginResponse.surname, loginResponse.cpf,
                                         loginResponse.birth, loginResponse.email,
-                                        loginResponse.token
+                                        loginResponse.token, lembrar = true
                                 )
+
                                 Log.i("response", loginResponse.toString())
                                 abrirDashBoard()
 
-                            } else {
-                                tv_erro.setText("Email ou senha incorretos!")
+                            } else if(loginResponse?.moradorId != null) {
+                                sessionManager.saveAuthToken(
+                                    loginResponse.moradorId, loginResponse.name,
+                                    loginResponse.surname, loginResponse.cpf,
+                                    loginResponse.birth, loginResponse.email,
+                                    loginResponse.token, lembrar = false
+                                )
 
+                                Log.i("response", loginResponse.toString())
+                                abrirDashBoard()
+
+                            } else{
+                                tv_erro.setText("Email ou senha incorretos!")
                             }
                         }
 

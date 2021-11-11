@@ -69,7 +69,8 @@ class DashBoardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 Toast.makeText(this, "Home Clicado", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_agendamento -> {
-                Toast.makeText(this, "Agendamento Clicado", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, AgendamentoEspaco::class.java)
+                startActivity(intent)
             }
             R.id.nav_conversas -> {
                 Toast.makeText(this, "Conversas Clicado", Toast.LENGTH_SHORT).show()
