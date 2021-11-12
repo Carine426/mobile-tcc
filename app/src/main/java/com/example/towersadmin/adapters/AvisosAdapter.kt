@@ -1,4 +1,4 @@
-package com.example.towersadmin.Adapters
+package com.example.towersadmin.adapters
 
 //import android.content.Context
 //import androidx.recyclerview.widget.RecyclerView

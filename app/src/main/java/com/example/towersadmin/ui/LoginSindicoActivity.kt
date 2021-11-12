@@ -24,6 +24,14 @@ class LoginSindicoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_sindico)
 
+        val dados = getSharedPreferences("TowersAdmin", MODE_PRIVATE)
+
+        val lembrar = dados.getBoolean("lembrar", false)
+
+        if (lembrar == true){
+            abrirDashBoard()
+        }
+
         apiClient = ApiClient()
         sessionManager = SessionManager(this)
 
@@ -34,21 +42,13 @@ class LoginSindicoActivity : AppCompatActivity() {
         val tv_esqueceu_senha: TextView = findViewById(R.id.esqueceu_senha)
         val check_lembrar : CheckBox = findViewById(R.id.check_lembrar)
 
-
-        fun abrirDashBoard() {
-            val intent = Intent(this, DashBoardActivity::class.java)
-            startActivity(intent)
-        }
-
-
         btn_continuar.setOnClickListener {
             apiClient.getApiService()
                     .loginSindico(LoginRequest(et_email.text.toString(), et_senha.text.toString()))
                     .enqueue(object : Callback<LoginSindicoResponse> {
 
                         override fun onResponse(
-                                call: Call<LoginSindicoResponse>, response: Response<LoginSindicoResponse>
-                        ) {
+                            call: Call<LoginSindicoResponse>, response: Response<LoginSindicoResponse>) {
                             val loginResponse = response.body()
 
                             if (loginResponse?.sindicoId != null && check_lembrar.isChecked) {
@@ -91,6 +91,11 @@ class LoginSindicoActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "Contacte a Administração do seu condominio!", Toast.LENGTH_LONG).show()
         }
 
+    }
+    private fun abrirDashBoard() {
+        val intent = Intent(this, DashBoardActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
 }

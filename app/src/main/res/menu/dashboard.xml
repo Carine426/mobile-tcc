@@ -30,5 +30,8 @@
         <item
             android:id="@+id/nav_pagamento_condominal"
             android:title="@string/action_pagamento_condominal" />
+        <item
+            android:id="@+id/nav_sair"
+            android:title="@string/action_sair" />
     </group>
 </menu>

@@ -25,6 +25,14 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        val dados = getSharedPreferences("TowersAdmin", MODE_PRIVATE)
+
+        val lembrar = dados.getBoolean("lembrar", false)
+
+        if (lembrar == true){
+            abrirDashBoard()
+        }
+
         apiClient = ApiClient()
         sessionManager = SessionManager(this)
 
@@ -34,11 +42,6 @@ class LoginActivity : AppCompatActivity() {
         val tv_erro: TextView = findViewById(R.id.tv_mensagem_de_erro)
         val tv_esqueceu_senha: TextView = findViewById(R.id.esqueceu_senha)
         val check_lembrar : CheckBox = findViewById(R.id.check_lembrar)
-
-        fun abrirDashBoard() {
-            val intent = Intent(this, DashBoardActivity::class.java)
-            startActivity(intent)
-        }
 
 
         btn_continuar.setOnClickListener {
@@ -88,6 +91,11 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "Contacte a Administração do seu condominio!", Toast.LENGTH_LONG).show()
         }
 
+    }
+    private fun abrirDashBoard() {
+        val intent = Intent(this, DashBoardActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
 }
