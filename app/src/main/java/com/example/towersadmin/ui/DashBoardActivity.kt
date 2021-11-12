@@ -158,7 +158,6 @@ class DashBoardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         finish()
     }
 
-
 }
 
 
