@@ -3,8 +3,7 @@ package com.example.towersadmin.api
 import com.example.towersadmin.data.*
 import com.example.towersadmin.utils.Constants
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface ApiService {
     @POST(Constants.LOGIN_URL)
@@ -13,9 +12,11 @@ interface ApiService {
     @POST(Constants.SINDICO_URL)
     fun loginSindico(@Body loginRequest: LoginRequest): Call<LoginSindicoResponse>
 
+    @Multipart
     @POST(Constants.VISITANTE_MORADOR_URL)
-    fun visitanteMorador(@Body cadastroVisitanteReq: CadastroVisitanteReq): Call<VisitanteMoradorRes>
+    fun visitanteMorador(@Part cadastroVisitanteReq: CadastroVisitanteReq): Call<VisitanteMoradorRes>
 
     @POST(Constants.VISITANTE_SINDICO_URL)
-    fun visitanteSindico(@Body cadastroVisitanteReq: CadastroVisitanteReq): Call<VisitanteSindicoRes>
+    fun visitanteSindico(@Body cadastroVisitanteReq: CadastroVisitanteSindicoReq): Call<VisitanteSindicoRes>
+
 }

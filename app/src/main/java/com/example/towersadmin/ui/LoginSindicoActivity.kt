@@ -29,7 +29,7 @@ class LoginSindicoActivity : AppCompatActivity() {
         val lembrar = dados.getBoolean("lembrar", false)
 
         if (lembrar == true){
-            abrirDashBoard()
+            abrirDashBoardSindico()
         }
 
         apiClient = ApiClient()
@@ -58,7 +58,7 @@ class LoginSindicoActivity : AppCompatActivity() {
                                     loginResponse.token, lembrar = true
                                 )
 
-                                abrirDashBoard()
+                                abrirDashBoardSindico()
 
                                 Log.i("response", response.body().toString())
 
@@ -72,7 +72,7 @@ class LoginSindicoActivity : AppCompatActivity() {
                                 )
 
                                 Log.i("response", loginResponse.toString())
-                                abrirDashBoard()
+                                abrirDashBoardSindico()
 
                             } else {
                                 tv_erro.setText("Email ou senha incorretos!")
@@ -92,8 +92,8 @@ class LoginSindicoActivity : AppCompatActivity() {
         }
 
     }
-    private fun abrirDashBoard() {
-        val intent = Intent(this, DashBoardActivity::class.java)
+    private fun abrirDashBoardSindico() {
+        val intent = Intent(this, DashBoardSindicoActivity::class.java)
         startActivity(intent)
         finish()
     }

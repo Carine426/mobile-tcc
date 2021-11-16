@@ -10,19 +10,17 @@ import android.view.View
 import android.widget.*
 import com.example.towersadmin.R
 import com.example.towersadmin.api.ApiClient
-import com.example.towersadmin.api.ApiService
-import com.example.towersadmin.data.CadastroVisitanteReq
-import com.example.towersadmin.data.VisitanteMoradorRes
+import com.example.towersadmin.data.CadastroVisitanteSindicoReq
+import com.example.towersadmin.data.VisitanteSindicoRes
 import com.example.towersadmin.utils.SessionManager
-import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
-class CadastroVisitanteActivity : AppCompatActivity() {
+class CadastroVisitanteSindicoActitivty : AppCompatActivity() {
 
-    lateinit var iv_image : ImageView
+    lateinit var iv_image: ImageView
 
     private lateinit var sessionManager: SessionManager
     private lateinit var apiClient: ApiClient
@@ -32,7 +30,7 @@ class CadastroVisitanteActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_cadastro_visitante)
+        setContentView(R.layout.activity_cadastro_visitante_sindico_actitivty)
 
         val dados = getSharedPreferences("TowersAdmin", MODE_PRIVATE)
         apiClient = ApiClient()
@@ -52,33 +50,35 @@ class CadastroVisitanteActivity : AppCompatActivity() {
         }
 
         iv_voltar.setOnClickListener {
-            abrirDashBoard()
+            abrirDashBoardSindico()
         }
 
         tv_foto.setOnClickListener {
             abrirGaleria()
         }
+
         btn_salvar.setOnClickListener {
 
-        apiClient.getApiService()
-                .visitanteMorador(CadastroVisitanteReq(et_nome.text.toString(),et_rg.text.toString(), et_cpf.text.toString(),
-                        tv_foto.text.toString(),
-                    dados.getInt("user_id", 0)))
-                    .enqueue(object : Callback<VisitanteMoradorRes>{
-                        override fun onResponse(call: Call<VisitanteMoradorRes>, response: Response<VisitanteMoradorRes>) {
-                            val visitanteMoradorRes = response.body()
+            apiClient.getApiService()
+                    .visitanteSindico(CadastroVisitanteSindicoReq(et_nome.text.toString(),
+                            et_rg.text.toString(), et_cpf.text.toString(), tv_foto.text.toString(),
+                            dados.getInt("user_id", 0)))
+                    .enqueue(object : Callback<VisitanteSindicoRes> {
+                        override fun onResponse(call: Call<VisitanteSindicoRes>, response: Response<VisitanteSindicoRes>) {
+                            val visitanteSindicoRes = response.body()
 
-                            if (visitanteMoradorRes?.morador?.id != null){
-                                Log.i("response", visitanteMoradorRes.toString())
+                            if (visitanteSindicoRes?.sindico?.id != null) {
+                                Log.i("response", visitanteSindicoRes.toString())
                                 msgSucesso()
                             }
                         }
 
-                        override fun onFailure(call: Call<VisitanteMoradorRes>, t: Throwable) {
+                        override fun onFailure(call: Call<VisitanteSindicoRes>, t: Throwable) {
                             msgErro()
                         }
 
                     })
+
         }
 
 
@@ -97,11 +97,11 @@ class CadastroVisitanteActivity : AppCompatActivity() {
         // Iniciar a Activity, mas nesse caso nós queremos que essa activity retorne algo pra gnt, a imagem
 
         startActivityForResult(
-            Intent.createChooser(
-                intent,
-                "Escolha uma foto"
-            ),
-            CODE_IMAGE
+                Intent.createChooser(
+                        intent,
+                        "Escolha uma foto"
+                ),
+                CODE_IMAGE
         )
     }
 
@@ -115,7 +115,7 @@ class CadastroVisitanteActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == CODE_IMAGE && resultCode == -1){
+        if (requestCode == CODE_IMAGE && resultCode == -1) {
 
             //recuperar a imagem no stream
             val stream = contentResolver.openInputStream(data!!.data!!)
@@ -127,9 +127,13 @@ class CadastroVisitanteActivity : AppCompatActivity() {
             //Colocar imagem no ImageView
             iv_image.setImageBitmap(imageBitmap)
 
-        }
-        else {
+        } else {
             Toast.makeText(this, "Selecione uma foto", Toast.LENGTH_LONG).show()
         }
+    }
+    private fun abrirDashBoardSindico() {
+        val intent = Intent(this, DashBoardSindicoActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

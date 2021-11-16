@@ -1,8 +1,7 @@
-package com.example.towersadmin
+package com.example.towersadmin.utils
 
 import android.content.Context
 import android.util.Log
-import com.example.towersadmin.utils.SessionManager
 import okhttp3.Interceptor
 import okhttp3.Response
 

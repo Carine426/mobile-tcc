@@ -1,21 +1,22 @@
 package com.example.towersadmin.data
 
 import com.google.gson.annotations.SerializedName
+import retrofit2.http.Part
 
 data class CadastroVisitanteReq(
 
-        @SerializedName("name")
+        @Part("name")
         var name: String,
 
-        @SerializedName("rg")
+        @Part("rg")
         var rg: String,
 
-        @SerializedName("cpf")
+        @Part("cpf")
         var cpf: String,
 
-        @SerializedName("image")
+        @Part("image")
         var image: String,
 
-        @SerializedName("morador_id")
+        @Part("morador_id")
         var morador_id: Int
 )

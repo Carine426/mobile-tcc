@@ -16,8 +16,10 @@ class MainActivity : AppCompatActivity() {
 
         val lembrar = dados.getBoolean("lembrar", false)
 
-        if (lembrar == true){
+        if (lembrar == true) {
             abrirDashBoard()
+        } else if (lembrar == true) {
+            abrirDashBoardSindico()
         }
 
 
@@ -37,6 +39,11 @@ class MainActivity : AppCompatActivity() {
     }
     private fun abrirDashBoard() {
         val intent = Intent(this, DashBoardActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+    private fun abrirDashBoardSindico() {
+        val intent = Intent(this, DashBoardSindicoActivity::class.java)
         startActivity(intent)
         finish()
     }
