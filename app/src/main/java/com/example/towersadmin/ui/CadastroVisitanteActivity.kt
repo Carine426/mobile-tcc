@@ -60,15 +60,23 @@ class CadastroVisitanteActivity : AppCompatActivity() {
         }
         btn_salvar.setOnClickListener {
 
-        apiClient.getApiService()
-                .visitanteMorador(CadastroVisitanteReq(et_nome.text.toString(),et_rg.text.toString(), et_cpf.text.toString(),
-                        tv_foto.text.toString(),
-                    dados.getInt("user_id", 0)))
-                    .enqueue(object : Callback<VisitanteMoradorRes>{
-                        override fun onResponse(call: Call<VisitanteMoradorRes>, response: Response<VisitanteMoradorRes>) {
+            if (et_nome.text.isNotEmpty() && et_cpf.text.isNotEmpty() && et_rg.text.isNotEmpty()) {
+                apiClient.getApiService()
+                    .visitanteMorador(
+                        CadastroVisitanteReq(
+                            et_nome.text.toString(), et_rg.text.toString(), et_cpf.text.toString(),
+                            tv_foto.text.toString(),
+                            dados.getInt("user_id", 0)
+                        )
+                    )
+                    .enqueue(object : Callback<VisitanteMoradorRes> {
+                        override fun onResponse(
+                            call: Call<VisitanteMoradorRes>,
+                            response: Response<VisitanteMoradorRes>
+                        ) {
                             val visitanteMoradorRes = response.body()
 
-                            if (visitanteMoradorRes?.morador?.id != null){
+                            if (visitanteMoradorRes?.morador?.id != null) {
                                 Log.i("response", visitanteMoradorRes.toString())
                                 msgSucesso()
                             }
@@ -79,6 +87,10 @@ class CadastroVisitanteActivity : AppCompatActivity() {
                         }
 
                     })
+            } else {
+                Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_LONG).show()
+            }
+
         }
 
 

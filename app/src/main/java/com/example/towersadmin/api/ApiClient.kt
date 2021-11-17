@@ -1,7 +1,9 @@
 package com.example.towersadmin.api
 
 import com.example.towersadmin.utils.Constants
+import com.example.towersadmin.utils.Constants.BASE_URL
 import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

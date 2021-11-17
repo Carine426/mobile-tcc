@@ -12,11 +12,11 @@ interface ApiService {
     @POST(Constants.SINDICO_URL)
     fun loginSindico(@Body loginRequest: LoginRequest): Call<LoginSindicoResponse>
 
-    @Multipart
     @POST(Constants.VISITANTE_MORADOR_URL)
     fun visitanteMorador(@Part cadastroVisitanteReq: CadastroVisitanteReq): Call<VisitanteMoradorRes>
 
     @POST(Constants.VISITANTE_SINDICO_URL)
     fun visitanteSindico(@Body cadastroVisitanteReq: CadastroVisitanteSindicoReq): Call<VisitanteSindicoRes>
+
 
 }

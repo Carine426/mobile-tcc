@@ -59,12 +59,20 @@ class CadastroVisitanteSindicoActitivty : AppCompatActivity() {
 
         btn_salvar.setOnClickListener {
 
-            apiClient.getApiService()
-                    .visitanteSindico(CadastroVisitanteSindicoReq(et_nome.text.toString(),
+            if (et_nome.text.isNotEmpty() && et_cpf.text.isNotEmpty() && et_rg.text.isNotEmpty()) {
+                apiClient.getApiService()
+                    .visitanteSindico(
+                        CadastroVisitanteSindicoReq(
+                            et_nome.text.toString(),
                             et_rg.text.toString(), et_cpf.text.toString(), tv_foto.text.toString(),
-                            dados.getInt("user_id", 0)))
+                            dados.getInt("user_id", 0)
+                        )
+                    )
                     .enqueue(object : Callback<VisitanteSindicoRes> {
-                        override fun onResponse(call: Call<VisitanteSindicoRes>, response: Response<VisitanteSindicoRes>) {
+                        override fun onResponse(
+                            call: Call<VisitanteSindicoRes>,
+                            response: Response<VisitanteSindicoRes>
+                        ) {
                             val visitanteSindicoRes = response.body()
 
                             if (visitanteSindicoRes?.sindico?.id != null) {
@@ -78,6 +86,9 @@ class CadastroVisitanteSindicoActitivty : AppCompatActivity() {
                         }
 
                     })
+            }else {
+                Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_LONG).show()
+            }
 
         }
 
